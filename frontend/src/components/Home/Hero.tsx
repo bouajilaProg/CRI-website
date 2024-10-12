@@ -6,11 +6,9 @@ function Hero() {
         backgroundImage: "url(cri.jpg)",
       }}>
       <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-neutral-content text-center">
-        <div className="max-w-md">
-          <h1 className="mb-5 text-5xl font-bold">Club Robotique Isimm</h1>
-          <p className="mb-5">
-            CRI est un groupe des jeunes actifs doués par la conception et le développement robotique à l'ISIMM          </p>
+      <div className="hero-content text-white text-center shadow-black">
+        <div className="max-w-lg">
+          <h1 className="mb-5 w-full text-6xl font-bold">Club Robotique Isimm</h1>
         </div>
       </div>
     </div>

@@ -20,9 +20,9 @@ function MainNav() {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li><a>RT page</a></li>
-            <li><a>contact </a></li>
+            className="menu menu-sm dropdown-content bg-white  z-[1]  w-52 p-2 shadow">
+            <li><a href="#">RT page</a></li>
+            <li><a href="#">contact </a></li>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">CRI</a>

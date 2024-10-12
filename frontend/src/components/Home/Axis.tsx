@@ -2,11 +2,23 @@ import AxisItem from './AxisItem'
 
 function Axis() {
   return (
-    <div className=" mt-12 join join-vertical md:join-horizontal flex justify-evenly">
-      <AxisItem title="family" description='CRI est une famille Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ' />
-      <AxisItem title="formation" description='Cri fait des formation Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' />
-      <AxisItem title="competition" description='CRI participe aux competitions Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' />
-    </div>
+    <>
+      <h2 className="text-4xl font-bold my-8 mx-4 text-center">Nos axes</h2>
+      <div className="join join-vertical md:join-horizontal flex justify-around w-full mt-8">
+        <AxisItem
+          title="Family"
+          description='CRI est plus qu’un simple club, c’est une véritable famille où chaque membre se soutient mutuellement. Ensemble, nous apprenons, créons et grandissons dans un environnement amical et collaboratif. Peu importe vos compétences, vous trouverez ici un espace où vous serez accueilli et encouragé à atteindre vos objectifs.'
+        />
+        <AxisItem
+          title="Formation"
+          description='Chez CRI, l’apprentissage est au cœur de nos activités. Nous proposons des formations variées sur la robotique, l’électronique, et le développement, adaptées aux débutants comme aux plus avancés. Notre objectif est de vous donner les compétences nécessaires pour transformer vos idées en projets concrets.'
+        />
+        <AxisItem
+          title="Competition"
+          description='CRI participe activement à des compétitions nationales et internationales, mettant au défi les membres de repousser leurs limites. C’est l’opportunité parfaite pour appliquer vos connaissances, collaborer en équipe, et représenter fièrement notre club tout en développant vos compétences dans des environnements compétitifs.'
+        />
+      </div>
+    </>
   )
 }
 
