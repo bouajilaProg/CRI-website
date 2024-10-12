@@ -6,14 +6,9 @@ function RtBar() {
     <div>
 
 
-      <div className=" bg-base-100 join-item text-black">
-        <RtSearchBar />
+      <div className=" flex sm:flex-row flex-col">
       </div>
 
-
-      <div>
-        <FilterBar />
-      </div>
     </div>
   )
 }
