@@ -1,4 +1,3 @@
-import Footer from '@/components/commun/Footer'
 import About from '@/components/Home/About'
 import Axis from '@/components/Home/Axis'
 import Faq from '@/components/Home/Faq'
@@ -13,8 +12,6 @@ function Home() {
       <Axis />
       <hr className='w-3/4 mx-auto my-8' />
       <Faq />
-      <br />
-      <Footer />
     </>
   )
 }

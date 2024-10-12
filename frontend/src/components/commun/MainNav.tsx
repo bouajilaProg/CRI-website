@@ -1,5 +1,7 @@
+import RtBarButtons from "./RtBarButtons"
 
 function MainNav() {
+  //TODO: update the buttons based on the user's authentication status 
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -33,7 +35,8 @@ function MainNav() {
           <li><a>Contact</a></li>
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-3">
+        <RtBarButtons />
         <a className="btn">Log in</a>
       </div>
     </div>

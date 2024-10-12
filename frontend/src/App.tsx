@@ -1,6 +1,8 @@
 import './App.css'
+import Footer from './components/commun/Footer'
 import MainNav from './components/commun/MainNav'
 import Home from './Pages/Home'
+import RTMain from './Pages/RTMain'
 
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
   return (
     <>
       <MainNav />
-      <Home />
+      <RTMain />
+      <br />
+      <Footer />
     </>
   )
 }
