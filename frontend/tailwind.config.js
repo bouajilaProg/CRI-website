@@ -60,7 +60,17 @@ export default {
   require('daisyui')],
   daisyui: {
     themes: ["light"],
-
   },
+  function({ addUtilities }) {
+    addUtilities({
+      '.line-clamp-3': {
+        display: '-webkit-box',
+        '-webkit-line-clamp': '4',
+        '-webkit-box-orient': 'vertical',
+      },
+
+    })
+
+  }
 }
 
