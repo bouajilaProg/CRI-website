@@ -1,7 +1,13 @@
 import RtSearchBar from '@/components/RT/RtSearchBar'
+import { useState } from 'react';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 function ProductPage() {
+
+  const [itemCounter, setItemCounter] = useState(0)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setItemCounter(parseInt(e.target.value))
+  }
   return (
     <>
       <RtSearchBar />
@@ -23,9 +29,11 @@ function ProductPage() {
 
             <div className="sm:mt-2  card-actions justify-center lg:justify-end">
 
-              <button className="btn  text-3xl"><IoIosRemoveCircleOutline /></button>
-              <input type="text" placeholder="0" className="input input-bordered max-w-16 text-center " />
-              <button className="btn  text-3xl">+</button>
+              <button className="btn  text-3xl" onClick={() => { setItemCounter(0) }}><IoIosRemoveCircleOutline /></button>
+              <input type="text" className="input input-bordered max-w-16 text-center" onChange={handleChange} value={isNaN(itemCounter) ? "" : itemCounter} />
+              <button className="btn  text-3xl" onClick={() => {
+                setItemCounter(itemCounter + 1)
+              }}  >+</button>
             </div>
           </div>
         </div>
