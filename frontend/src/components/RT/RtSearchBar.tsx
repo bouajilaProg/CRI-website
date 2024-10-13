@@ -53,9 +53,9 @@ function RtSearchBar() {
   console.log(options)
 
   return (
-    <>
-      <div className="flex justify-center mt-8  ">
-        <label className=" w-full md:w-1/2 ml-4 mr-8 p-0 my-0 flex items-center gap-2 gap-y-0 border border-slate-300 rounded-t">
+    <div className="ml-4 mr-8 ">
+      <div className="flex justify-center mt-8 ">
+        <label className=" w-full md:w-1/2  p-0 my-0 flex items-center gap-2 gap-y-0 border border-slate-300 rounded-t">
           <input type="text" className="grow p-2  focus:outline-none border-0" placeholder="Search" value={search} onChange={handleSearch} id="searchInput" />
           <button className=" p-2 h-full rounded-xs ">
             <svg
@@ -73,14 +73,14 @@ function RtSearchBar() {
         </label>
       </div>
 
-      <div className="flex justify-center align-top my-0 relative mx-8 md:mx-0">
+      <div className="flex justify-center align-top my-0 relative md:mx-0">
         <ul id="autoComplete" className={"bg-white list-none text-left w-full md:w-1/2 border z-20 border-t-0 border-slate-300 rounded-b m-0 absolute "} >
           {options.map((o, i) => (
             <li key={i} className="p-2 hover:bg-slate-300"><button className="w-full text-left">{o}</button></li>
           ))}
         </ul>
       </div >
-    </>
+    </div>
   )
 }
 
