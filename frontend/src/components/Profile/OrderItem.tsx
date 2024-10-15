@@ -18,7 +18,7 @@ function OrderItem({ date, status, items }: OrderItemProps) {
   return (
     <div>
       <div className="collapse collapse-arrow">
-        <input type="checkbox" name="my-accordion-2" defaultChecked />
+        <input type="checkbox" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium"><span className="mr-2">{date}</span>
           <Badge status={status} />
         </div>

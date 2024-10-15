@@ -1,7 +1,12 @@
+import { useState } from "react"
+
 function MainNav() {
+
+  const [authed, setAuthed] = useState<number>(1)
+
   //TODO: update the buttons based on the user's authentication status 
   return (
-    <div className="navbar bg-base-100 flex justify-between">
+    <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -22,22 +27,32 @@ function MainNav() {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-white  z-[1]  w-52 p-2 shadow">
             <li><a href="#">RT page</a></li>
-            <li><a href="#">contact </a></li>
-            <li><a>RT</a></li>
-            <li><a>order</a></li>
+            <li><a href="#order">Order</a></li>
+            <li><a href="contact">Contact (comming soon)</a></li>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">CRI</a>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li><a>RT page</a></li>
-          <li><a>Contact</a></li>
-          <li><a>RT</a></li>
-          <li><a>order</a></li>
-        </ul>
-      </div>
 
+      {
+        (authed == 1) ?
+          <div className="navbar-center hidden lg:flex">
+            <ul className="menu menu-horizontal px-1">
+              <li><a>RT page</a></li>
+              <li><a>Order</a></li>
+            </ul>
+          </div>
+          : ""}
+
+
+      <div className="navbar-end gap-3">
+        {(authed == 1) ?
+          <a className="btn">Profile</a>
+          :
+          <a className="btn">Log in</a>
+
+        }
+      </div>
     </div>
   )
 }
