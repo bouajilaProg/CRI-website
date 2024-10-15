@@ -23,7 +23,7 @@ function LoginPage() {
     e.preventDefault();
     setLoginValidationTestResult(2);
 
-    //check if the user is valid
+    //TODO:check if the user is valid
 
   }
 
