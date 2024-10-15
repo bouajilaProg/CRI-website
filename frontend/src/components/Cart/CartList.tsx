@@ -2,7 +2,7 @@ import CartItem from './CartItem'
 
 function CartList() {
   return (
-    <div className="sm:flex-[7] md:flex-[5]">
+    <div className="flex-[3]">
       <div>
         <CartItem />
         <CartItem />
