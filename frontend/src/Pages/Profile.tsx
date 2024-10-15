@@ -1,5 +1,5 @@
+import OrderItem from "@/components/Profile/OrderItem";
 import { useEffect, useState } from "react";
-import OrderItem from "./OrderItem";
 
 
 interface ProfileData {
@@ -37,12 +37,23 @@ function Profile() {
   }
     , [])
 
+  if (profileData.orders.length == 0) {
+    return (<div className="flex flex-col mx-8 md:mx-16">
+      <h1 className="text-4xl my-8">Hello {profileData.user}</h1>
+
+      <p>No orders found</p>
+    </div>)
+  }
+
+
+
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-8 md:mx-16">
       <h1 className="text-4xl my-8">Hello {profileData.user}</h1>
       <h3 className="text-2xl">My Orderers</h3>
 
-      {(profileData.orders.length == 0) ? <p>No orders found</p> : profileData.orders.map((order, index) => (
+      {profileData.orders.map((order, index) => (
         <>
           <OrderItem key={index} date={order.date} status={order.status} items={order.items} />
 
