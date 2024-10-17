@@ -1,8 +1,9 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 function MainNav() {
 
-  const [authed, setAuthed] = useState<number>(1)
+  const [authed, setAuthed] = useState<number>(0)
 
   //TODO: update the buttons based on the user's authentication status 
   return (
@@ -26,20 +27,21 @@ function MainNav() {
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-white  z-[1]  w-52 p-2 shadow">
-            <li><a href="#">RT page</a></li>
-            <li><a href="#order">Order</a></li>
-            <li><a href="contact">Contact (comming soon)</a></li>
+            <li><Link to="RT">RT page</Link></li>
+            <li><Link to="Order">Order</Link></li>
+            <li><Link to="puthy">Contact (coming soon)</Link></li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">CRI</a>
+        <Link to="/" className="btn btn-ghost text-xl">CRI</Link>
       </div>
 
       {
         (authed == 1) ?
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
-              <li><a>RT page</a></li>
-              <li><a>Order</a></li>
+              <li><Link to="RT">RT page</Link></li>
+              <li><Link to="Order">Order</Link></li>
+              <li><Link to="puthy">Contact (coming soon)</Link></li>
             </ul>
           </div>
           : ""}
@@ -47,9 +49,9 @@ function MainNav() {
 
       <div className="navbar-end gap-3">
         {(authed == 1) ?
-          <a className="btn">Profile</a>
+          <Link to="Profile" className="btn">Profile</Link>
           :
-          <a className="btn">Log in</a>
+          <Link to="Login" className="btn">Log in</Link>
 
         }
       </div>
