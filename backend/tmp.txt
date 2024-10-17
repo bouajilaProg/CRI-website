@@ -1,0 +1,28 @@
+
+CREATE TABLE Users (
+    userId SERIAL PRIMARY KEY,
+    userName VARCHAR(100) NOT NULL,
+    userEmail VARCHAR(100) UNIQUE NOT NULL,
+    userPassword VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Material (
+    materialId SERIAL PRIMARY KEY,
+    materialName VARCHAR(100) NOT NULL,
+    materialCount INT NOT NULL
+);
+
+CREATE TABLE Invoice (
+    invoiceId SERIAL PRIMARY KEY,
+    userId INT REFERENCES Users(userId) ON DELETE CASCADE,
+    itemCount INT NOT NULL,
+    invoiceStatus ENUM('accepted', 'refused', 'pending') NOT NULL
+);
+
+CREATE TABLE InvoiceItem (
+    invoiceId INT REFERENCES Invoice(invoiceId) ON DELETE CASCADE,
+    materialId INT REFERENCES Material(materialId) ON DELETE CASCADE,
+    itemCount INT NOT NULL,
+    itemStatus ENUM('returned', 'delivered') NOT NULL,
+    PRIMARY KEY (invoiceId, materialId)
+);
