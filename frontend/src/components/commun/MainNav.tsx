@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 function MainNav() {
 
-  const [authed, setAuthed] = useState<number>(0)
+  const [authed, setAuthed] = useState<number>(1)
 
   //TODO: update the buttons based on the user's authentication status 
   return (
@@ -28,7 +28,6 @@ function MainNav() {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-white  z-[1]  w-52 p-2 shadow">
             <li><Link to="RT">RT page</Link></li>
-            <li><Link to="Order">Order</Link></li>
             <li><Link to="puthy">Contact (coming soon)</Link></li>
           </ul>
         </div>
@@ -49,7 +48,11 @@ function MainNav() {
 
       <div className="navbar-end gap-3">
         {(authed == 1) ?
-          <Link to="Profile" className="btn">Profile</Link>
+          <>
+
+            <Link className="md:flex Cart btn" to={"/order"}>Cart</Link>
+            <Link to="Profile" className="btn">Profile</Link>
+          </>
           :
           <Link to="Login" className="btn">Log in</Link>
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 interface MaterialItemProps {
   title: string;
@@ -7,7 +8,7 @@ interface MaterialItemProps {
 
 function MaterialItem(MaterialItemDetails: MaterialItemProps) {
   return (
-    <div className="w-[46%] md:w-auto">
+    <Link to={"/RT/exemple"} className="w-[46%] md:w-auto">
       <div className="card card-compact p-0 m-0 bg-base-100 md:w-48 shadow-xl ">
         <figure>
           <img
@@ -24,7 +25,7 @@ function MaterialItem(MaterialItemDetails: MaterialItemProps) {
         </div>
 
       </div>
-    </div>)
+    </Link>)
 }
 
 export default MaterialItem
