@@ -20,7 +20,7 @@ CREATE TABLE category (
 );
 
 -- Material Table
-CREATE TABLE material (
+CREATE TABLE materiel (
     material_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     materiel_name VARCHAR(50),
     materiel_qte INT CHECK (materiel_qte >= 0),
@@ -32,7 +32,7 @@ CREATE TABLE material (
 -- Order Table
 CREATE TABLE orders (
     order_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INT REFERENCES users(user_id),
+    user_id INT REFERENCES users(id),
     begin_date DATE,
     return_date DATE,
     reason VARCHAR(255),

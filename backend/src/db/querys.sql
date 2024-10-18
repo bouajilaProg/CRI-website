@@ -1,58 +1,59 @@
 --login
-select user_id,password from users where email = "test";
+select user_id,password from users where email = 'test';
 
---select all products
-select * 
-from materiel as m , category as c
-where m.category_id = c.category_id;
-
---search product
+--select all products V
 select *
 from materiel as m , category as c
-where m.category_id = c.category_id and m.materiel_name like "%test%" and (materiel_qte > 0 or 0);
+where m.category_id = c.category_name_id;
 
---select materiel by id (optional)
+--search product V
 select *
 from materiel as m , category as c
-where m.category_id = c.category_id and m.materiel_id = 1;
+where m.category_id = c.category_name_id and m.materiel_name like '%test%' and (materiel_qte > 0 or true);
 
---create order
-insert into orders (user_id,order_status)
-values (1,"current");
+--select materiel by id (optional) V
+select *
+from materiel as m , category as c
+where m.category_id = c.category_name_id and m.materiel_id = 1;
 
---add materiel to order
-insert into order_materiel (order_id,materiel_id,qte)
+--create order V
+insert into orders (user_id,order_state)
+values (1,'current');
+
+--add materiel to order V
+insert into order_item (order_id,materiel_id,qte)
 values (1,1,1);
 
---update order 
-update order_materiel
+--update order V
+update order_item
 set qte = 2
+where order_id = 1 and materiel_id =11;
+
+--delete materiel from order V
+delete from order_item
 where order_id = 1 and materiel_id = 1;
 
---delete materiel from order
-delete from order_materiel
-where order_id = 1 and materiel_id = 1;
-
---get current order
+--get current order V
 select *
 from orders
-where user_id = 1 and order_status = "current";
+where user_id = 1 and order_state = 'current';
 
---send order
+
+--send order V
 update orders
-set order_status = "sent"
-set begin_date = "2024-02-02"
-set return_date = "2024-02-05"
-set reason = "test"
+set order_state = 'pending',
+begin_date = '2024-02-02', 
+return_date = '2024-02-05', 
+reason = 'test'
 where order_id = 1;
 
---get all order for a user
+--get all order for a user V
 select *
 from orders
 where user_id = 1;
 
---change order status
+--change order status V
 update orders
-set order_status = "returned"
+set order_state = 'returned'
 where order_id = 1;
 
