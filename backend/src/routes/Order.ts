@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { sqlRun } from "../db/sqlCodes/db";
+import { sqlRun } from "../db/db";
 
 const OrderRouter = Router();
 
-// Get all orders
+// Get all orders V
 OrderRouter.get('/all', async (req, res) => {
   try {
     const data = await sqlRun("SELECT * FROM orders;");
@@ -13,7 +13,7 @@ OrderRouter.get('/all', async (req, res) => {
   }
 });
 
-// Create a new order
+// Create a new order V
 OrderRouter.post('/new', async (req, res) => {
   const { userid } = req.body;
   try {
@@ -24,68 +24,68 @@ OrderRouter.post('/new', async (req, res) => {
   }
 });
 
-// Add materials to an order
+// Add materials to an order V
 OrderRouter.post("/add", async (req, res) => {
   const { orderid, materielid, qte } = req.body;
   try {
-    await sqlRun("INSERT INTO order_materiel (order_id, materiel_id, materiel_qte) VALUES ($1, $2, $3);", [orderid, materielid, qte]);
+    await sqlRun("INSERT INTO order_item (order_id, materiel_id,qte) VALUES ($1, $2, $3);", [orderid, materielid, qte]);
     res.status(201).json({ success: 'success:/add' });
   } catch (error) {
     res.status(500).json({ error: 'error:/add' });
   }
 });
 
-// Update material qte in an order
+// Update material qte in an order V
 OrderRouter.put("/update", async (req, res) => {
   const { orderid, materielid, qte } = req.body;
   try {
-    await sqlRun("UPDATE order_materiel SET materiel_qte = $3 WHERE order_id = $1 AND materiel_id = $2;", [orderid, materielid, qte]);
+    await sqlRun("UPDATE order_item SET qte = $3 WHERE order_id = $1 AND materiel_id = $2;", [orderid, materielid, qte]);
     res.status(200).json({ success: 'success:/update' });
   } catch (error) {
     res.status(500).json({ error: 'error:/update' });
   }
 });
 
-// Delete material from an order
+// Delete material from an order V
 OrderRouter.delete("/delete", async (req, res) => {
   const { orderid, materielid } = req.body;
   try {
-    await sqlRun("DELETE FROM order_materiel WHERE order_id = $1 AND materiel_id = $2;", [orderid, materielid]);
+    await sqlRun("DELETE FROM order_item WHERE order_id = $1 AND materiel_id = $2;", [orderid, materielid]);
     res.status(200).json({ success: 'success:/delete' });
   } catch (error) {
     res.status(500).json({ error: 'error:/delete' });
   }
 });
 
-// Get current orders for a user
+// Get current orders for a user V
 OrderRouter.post("/current", async (req, res) => {
   const { userid } = req.body;
   try {
-    const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_status = 'current';", [userid]);
-    res.status(200).json(data);
+    const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_state = 'current';", [userid]);
+    res.status(200).json(data.rows[0]);
   } catch (error) {
     res.status(500).json({ error: 'error:/current' });
   }
 });
 
-// Send an order
+// Send an order V
 OrderRouter.put("/send", async (req, res) => {
-  const { orderid, begin_date, end_date, reason } = req.body;
+  const { orderid, begin_date, return_date, reason } = req.body;
   try {
-    await sqlRun("UPDATE orders SET order_state = $1, begin_date = $2, end_date = $3, reason = $4 WHERE order_id = $5;",
-      ["sent", begin_date, end_date, reason, orderid]);
+    await sqlRun("UPDATE orders SET order_state = $1, begin_date = $2, return_date = $3, reason = $4 WHERE order_id = $5;",
+      ["pending", begin_date, return_date, reason, orderid]);
     res.status(200).json({ success: 'success:/send' });
   } catch (error) {
     res.status(500).json({ error: 'error:/send' });
   }
 });
 
-// Get orders for a specific user
+// Get orders for a specific user V
 OrderRouter.get("/:user", async (req, res) => {
   const { user } = req.params;
   try {
     const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_state != 'pending';", [user]);
-    res.status(200).json(data);
+    res.status(200).json(data.rows);
   } catch (error) {
     res.status(500).json({ error: 'error:/:user' });
   }

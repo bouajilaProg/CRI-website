@@ -21,6 +21,8 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/pg": "^8.11.10"
+    "@types/pg": "^8.11.10",
+    "axios": "^1.7.7",
+    "pgtyped": "^0.0.1"
   }
 }
