@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { sqlRun } from '../db/db';
+import { testNumber } from '../checks';
 
 //types
 type Materiel = {
@@ -14,12 +15,6 @@ type Materiel = {
   available: number;
 };
 
-
-
-
-
-
-
 const MaterielRouter = Router();
 
 // Get all materiel with their categories
@@ -28,7 +23,7 @@ MaterielRouter.get('/', async (req, res) => {
     const data = await sqlRun("SELECT * FROM materiel AS m, category AS c WHERE m.category_id = c.category_name_id;");
     res.status(200).json(data.rows);
   } catch (error) {
-    res.status(500).json({ error: 'error:/' });
+    res.status(500).json({ error: error });
   }
 });
 
@@ -40,6 +35,10 @@ MaterielRouter.post('/search', async (req, res) => {
     availability: boolean;
   };
   try {
+    if (category === undefined || availability === undefined) {
+      throw new Error("category or availability is missing");
+    }
+
     const data = await sqlRun(
 
       "SELECT * FROM materiel AS m, category AS c WHERE m.category_id = c.category_name_id AND m.materiel_name LIKE '%' || $1 || '%';",
@@ -62,6 +61,7 @@ MaterielRouter.post('/search', async (req, res) => {
 // Get a specific materiel by ID
 MaterielRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
+  testNumber(parseInt(id));
   try {
     const data = await sqlRun(
       "SELECT * FROM materiel AS m, category AS c WHERE m.category_id = c.category_name_id AND m.materiel_id = $1;",
@@ -69,7 +69,7 @@ MaterielRouter.get('/:id', async (req, res) => {
     );
     res.status(200).json(data.rows[0]);
   } catch (error) {
-    res.status(500).json({ error: 'error:/:id' });
+    res.status(500).json({ error: error });
   }
 });
 
