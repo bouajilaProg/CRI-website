@@ -8,7 +8,7 @@ interface LoginPageProps {
 function LoginPage() {
 
 
-  const [loginDate, setLoginDate] = useState<LoginPageProps>({
+  const [loginData, setLoginData] = useState<LoginPageProps>({
     username: "",
     password: "",
   })
@@ -42,8 +42,8 @@ function LoginPage() {
                 id="username"
                 type="text"
                 placeholder="Username"
-                value={loginDate.username}
-                onChange={(e) => setLoginDate({ ...loginDate, username: e.target.value })}
+                value={loginData.username}
+                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
               />
             </div>
             <div className="mb-6">
@@ -55,8 +55,8 @@ function LoginPage() {
                 id="password"
                 type="password"
                 placeholder="password"
-                value={loginDate.password}
-                onChange={(e) => setLoginDate({ ...loginDate, password: e.target.value })}
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
               />
             </div>
             <div className="flex items-center justify-between">
