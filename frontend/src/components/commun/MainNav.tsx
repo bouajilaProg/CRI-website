@@ -1,9 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 function MainNav() {
 
+
   const [authed, setAuthed] = useState<number>(1)
+
+  useEffect(() => {
+    localStorage.getItem("user_id") ? setAuthed(1) : setAuthed(0)
+  }, [])
+
+
 
   //TODO: update the buttons based on the user's authentication status 
   return (

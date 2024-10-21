@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { sqlRun } from "../db/db";
 import { testNumber } from "../checks";
+import { encrypt } from "../utils";
 
 const UserRouter = Router();
 
@@ -12,7 +13,6 @@ UserRouter.get('/all', async (req, res) => {
 
 UserRouter.post("/Login", async (req, res) => {
   try {
-
     const { email, password } = req.body;
     const data: any = await sqlRun("select user_id,password from users where email = $1;", [email]);
 
@@ -26,10 +26,13 @@ UserRouter.post("/Login", async (req, res) => {
     }
     if (data.rows[0].password != password) {
       res.status(401).json("-1");
+      console.log(data.rows[0]);
       return;
     }
     if (data.rows[0].password == password) {
-      res.status(200).json(data.rows[0].user_id);
+      console.log(data.rows[0]);
+      res.status(200).json(JSON.stringify(data.rows[0].user_id));
+
       return
     }
   } catch (error) {

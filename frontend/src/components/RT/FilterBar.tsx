@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-function FilterBar() {
+function FilterBar({ categorySetter, categories }: { categorySetter: (category: string[]) => void, categories: string[] }) {
 
   const [category, setCategory] = useState([] as string[]);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -19,6 +19,7 @@ function FilterBar() {
     } else {
       setCategory(category.filter((c) => c !== value));
     }
+    categorySetter(category);
   }
 
 
@@ -36,17 +37,17 @@ function FilterBar() {
               <input type="checkbox" name="my-accordion-2" defaultChecked />
               <div className="collapse-title text-xl font-medium">Category</div>
               <div className="collapse-content flex flex-col">
-                <label className="cursor-pointer label">
-                  <span className="label-text">Arduino</span>
-                  <input
-                    onChange={(e) => handleCategory(e)}
-                    type="checkbox"
-                    name="category"
-                    value="arduino"
-                    id="pizza"
-                    className="checkbox"
-                  />
-                </label>
+                {categories.map((c, i) => (
+                  <label key={i} className="cursor-pointer label">
+                    <span className="label-text">{c}</span>
+                    <input
+                      type="checkbox"
+                      name="category"
+                      value={c}
+                      className="checkbox"
+                      onChange={handleCategory}
+                    />
+                  </label>))}
               </div>
             </div>
           </div>

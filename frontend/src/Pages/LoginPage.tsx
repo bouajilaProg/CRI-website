@@ -1,15 +1,18 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPageProps {
-  username: string;
+  email: string;
   password: string;
 }
 
 function LoginPage() {
 
+  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState<LoginPageProps>({
-    username: "",
+    email: "",
     password: "",
   })
 
@@ -21,10 +24,27 @@ function LoginPage() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoginValidationTestResult(2);
 
     //TODO:check if the user is valid
+    let data;
+    axios.post("http://localhost:4000/users/Login", { email: loginData.email, password: loginData.password }).then((res) => {
 
+      if (res.status === 200) {
+        data = res.data;
+        localStorage.setItem("user_id", data);
+        setLoginValidationTestResult(1);
+
+        navigate("/Profile");
+      }
+    }).catch((err) => {
+      if (err.status === 401) {
+        console.log("email not found");
+        setLoginValidationTestResult(2);
+      }
+      if (err.status === 404) {
+        setLoginValidationTestResult(3);
+      }
+    });
   }
 
   return (
@@ -35,15 +55,15 @@ function LoginPage() {
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={(e) => { handleSubmit(e) }}>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                Username
+                email
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" + (loginValidationTestResult == 3 ? " border-red-500" : "")}
                 id="username"
                 type="text"
                 placeholder="Username"
-                value={loginData.username}
-                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                value={loginData.email}
+                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
               />
             </div>
             <div className="mb-6">
@@ -51,7 +71,7 @@ function LoginPage() {
                 Password
               </label>
               <input
-                className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" + (loginValidationTestResult > 1 ? " border-red-500" : "")}
                 id="password"
                 type="password"
                 placeholder="password"

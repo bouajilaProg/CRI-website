@@ -12,7 +12,7 @@ type Materiel = {
   category_id: number;
   category_name_id: number;
   category_name: string;
-  available: number;
+  materiel_qte: number;
 };
 
 const MaterielRouter = Router();
@@ -50,7 +50,7 @@ MaterielRouter.post('/search', async (req, res) => {
     }
 
     if (availability == true) {
-      result = result.filter((materiel: Materiel) => materiel.available > 0);
+      result = result.filter((materiel: Materiel) => materiel.materiel_qte > 0);
     }
     res.status(200).json(result);
   } catch (error) {

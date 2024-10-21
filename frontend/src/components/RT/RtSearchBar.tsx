@@ -9,7 +9,7 @@ import materiel from "../../temp/materiel"
 import { useEffect, useState } from "react"
 
 
-function RtSearchBar() {
+function RtSearchBar({ nameSetter }: { nameSetter: (name: string) => void }) {
   const [search, setSearch] = useState("")
   let options: string[] = []
 
@@ -44,6 +44,7 @@ function RtSearchBar() {
       options = materiel.map(m => m.name).filter(o => o.includes(search))
     }
     setSearch(e.target.value)
+    nameSetter(e.target.value)
   }
 
   options = materiel.map(m => m.name).filter(o => o.includes(search))

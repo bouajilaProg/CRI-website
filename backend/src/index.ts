@@ -1,5 +1,9 @@
 //imports 
 import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
+
+
+//setup
 const app = express();
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
@@ -9,7 +13,8 @@ import UserRouter from './routes/Users';
 import MaterielRouter from './routes/Materiel';
 import OrderRouter from './routes/Order';
 
-//setup
+
+dotenv.config();
 app.use(cors([
   {
     origin: 'http://localhost:3000',
