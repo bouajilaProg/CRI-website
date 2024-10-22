@@ -1,28 +1,39 @@
 import { ChangeEvent, useState } from "react";
 
-function FilterBar({ categorySetter, categories }: { categorySetter: (category: string[]) => void, categories: string[] }) {
+function FilterBar({ categorySetter, availabilitySetter, categories }:
+  {
+    categorySetter: (category: string[]) => void,
+    availabilitySetter: (availability: boolean) => void,
+    categories: string[]
+  }) {
 
   const [category, setCategory] = useState([] as string[]);
+  const [available, setAvailable] = useState(false);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const available = (e.currentTarget.elements.namedItem('available') as HTMLInputElement).value;
-    console.log({ category, available });
-  }
-
-
-  function handleCategory(e: ChangeEvent<HTMLInputElement>) {
-    const value = (e.target as HTMLInputElement).value;
-    const isChecked = (e.target as HTMLInputElement).checked;
-
-    if (isChecked) {
-      setCategory([...category, value]);
-    } else {
-      setCategory(category.filter((c) => c !== value));
-    }
+    availabilitySetter(available);
     categorySetter(category);
   }
 
 
+  function handleCategory(e: ChangeEvent<HTMLInputElement>) {
+    console.log("category:" + category)
+    const value = (e.target as HTMLInputElement).value;
+    let tempCategory = [...category];
+
+    if (category.includes(value)) {
+      tempCategory = category.filter((c) => c !== value);
+    }
+    else {
+      tempCategory.push(value);
+    }
+    setCategory(tempCategory);
+  }
+
+  function handleAvailable(e: ChangeEvent<HTMLInputElement>) {
+    const checked = (e.target as HTMLInputElement).checked;
+    setAvailable(checked);
+  }
 
   return (
     <div className="flex-1 shadow-black">
@@ -46,6 +57,7 @@ function FilterBar({ categorySetter, categories }: { categorySetter: (category: 
                       value={c}
                       className="checkbox"
                       onChange={handleCategory}
+                      checked={category.includes(c)}
                     />
                   </label>))}
               </div>
@@ -65,19 +77,11 @@ function FilterBar({ categorySetter, categories }: { categorySetter: (category: 
                     value="yes"
                     id="available-yes"
                     className="checkbox"
-                    defaultChecked
+                    checked={available}
+                    onChange={handleAvailable}
                   />
                 </label>
-                <label className="cursor-pointer label">
-                  <span className="label-text">No</span>
-                  <input
-                    type="checkbox"
-                    name="available"
-                    value="no"
-                    id="available-no"
-                    className="checkbox"
-                  />
-                </label>
+
               </div>
             </div>
           </div>

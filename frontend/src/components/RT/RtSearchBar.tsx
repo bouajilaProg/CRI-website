@@ -51,8 +51,6 @@ function RtSearchBar({ nameSetter }: { nameSetter: (name: string) => void }) {
   if (search === "") {
     options = []
   }
-  console.log(options)
-
   return (
     <div className="ml-4 mr-8 ">
       <div className="flex justify-center mt-8 ">
