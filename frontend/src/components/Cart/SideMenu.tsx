@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 type CartRequest = {
@@ -19,6 +20,7 @@ function SideMenu({ orderid }: { orderid: number }) {
     reason: "temp"
   })
 
+  const navigate = useNavigate();
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -48,7 +50,7 @@ function SideMenu({ orderid }: { orderid: number }) {
       axios.put('http://localhost:4000/order/send', { ...updatedCartRequest, orderid: orderid })
         .then(res => {
           if (res.data.success) {
-            alert('Order sent successfully');
+            navigate("/profile")
           }
         })
         .catch(err => {

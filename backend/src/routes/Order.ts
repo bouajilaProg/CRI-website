@@ -139,7 +139,7 @@ OrderRouter.get("/orderItem", async (req, res) => {
 OrderRouter.get("/cart/list/:cartId", async (req, res) => {
   const { cartId } = req.params;
   try {
-    const data = await sqlRun("SELECT materiel_name,description,qte FROM order_item as o,materiel as m WHERE order_id = $1 and m.materiel_id = o.materiel_id;", [cartId]);
+    const data = await sqlRun("SELECT m.materiel_id,materiel_name,description,qte FROM order_item as o,materiel as m WHERE order_id = $1 and m.materiel_id = o.materiel_id;", [cartId]);
     res.status(200).json(data.rows);
   } catch (error) {
     res.status(500).json({ error: error });
@@ -192,10 +192,8 @@ OrderRouter.get("/:user", async (req, res) => {
       });
     });
 
-    // Wait for all order item promises to resolve
+    //estana el proises lkol
     await Promise.all(orderItemPromises);
-
-    // Send the response after all data has been gathered
     res.status(200).json(Result);
 
   } catch (error) {

@@ -4,19 +4,21 @@ import getUserId from '@/utils/UserManager';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+// Updated CartItem type to include materialId
 type CartItem = {
+  materialId: number; // Add materialId here
   materielName: string;
-  desciption: string;
+  description: string; // Corrected spelling from "desciption" to "description"
   qte: number;
 };
 
-type Cart = {
+type t_cart = {
   orderid: number;
   orderItems: CartItem[];
 };
 
 function Cart() {
-  const [cart, setCart] = useState<Cart>({
+  const [cart, setCart] = useState<t_cart>({
     orderid: 0,
     orderItems: [],
   });
@@ -30,8 +32,9 @@ function Cart() {
       // get order items
       const orderItemsRequest = await axios.get(`http://localhost:4000/order/cart/list/${orderid}`);
       const orderItems: CartItem[] = orderItemsRequest.data.map((item: any) => ({
+        materialId: item.materiel_id, // Extract material_id from API response
         materielName: item.materiel_name,
-        desciption: item.description,
+        description: item.description, // Corrected spelling
         qte: item.qte,
       }));
 
@@ -52,11 +55,22 @@ function Cart() {
     fetchData();
   }, []);
 
+
+  //if empty Cart
+  if (cart.orderItems.length === 0) {
+    return (
+      <div>
+        <h1 className="text-center text-4xl">empty Order List</h1>
+      </div>
+    );
+  }
+
+
   return (
     <div>
       <h1 className="text-center text-4xl">Order List</h1>
       <div className="flex justify-between flex-col md:flex-row gap-4 m-16">
-        <CartList />
+        <CartList materielList={cart.orderItems} />
         <SideMenu orderid={cart.orderid} />
       </div>
     </div>

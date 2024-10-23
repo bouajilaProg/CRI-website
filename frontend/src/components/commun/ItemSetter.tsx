@@ -1,6 +1,5 @@
 import getUserId from "@/utils/UserManager";
 import axios from "axios";
-import { assert } from "console";
 import { useEffect, useState } from "react"
 import { IoIosAddCircleOutline, IoIosCheckmark, IoIosClose, IoIosRemoveCircleOutline } from "react-icons/io";
 
