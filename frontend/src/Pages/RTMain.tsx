@@ -1,6 +1,7 @@
 import FilterBar from "@/components/RT/FilterBar"
 import MaterialList from "@/components/RT/MaterialList"
 import RtSearchBar from "@/components/RT/RtSearchBar"
+import getUserId from "@/utils/UserManager"
 import axios from "axios"
 import { useEffect, useState } from "react"
 
@@ -45,22 +46,35 @@ function RTMain() {
   };
 
 
-
   const [categories, setCategories] = useState<string[]>([]);
   const [materielList, setMaterielList] = useState<Materiel[]>([]);
 
-  useEffect(() => {
-    axios.get(`http://localhost:4000/materiel/search`)
+  async function onStart() {
+
+    const res = await axios.get("http://localhost:4000/order/current?userid=" + getUserId())
+
+    if (!res.data) {
+      await axios.post("http://localhost:4000/order/new", { userid: getUserId() })
+    } else {
+      console.log("already have order")
+    }
+
+    await axios.get(`http://localhost:4000/materiel/search`)
       .then((res) => {
         console.log(res.data);
         setMaterielList(res.data.materiels);
         setCategories(res.data.categories);
       });
+  }
+
+  useEffect(() => {
+    onStart()
+
   }, []); // Runs only on mount
 
   useEffect(() => {
     //TODO: fetch data from server
-    axios.get(`http://localhost:4000/materiel/search?name=` + filters.name).then((res) => {
+    axios.get("http://localhost:4000/materiel/search/" + filters.name).then((res) => {
       setCategories(res.data.categories);
       setMaterielList(res.data.materiels);
     })
@@ -69,7 +83,7 @@ function RTMain() {
   useEffect(() => {
     //TODO: fetch data from server
     const { category, availability } = filters;
-    axios.get(`http://localhost:4000/materiel/search?name=` + filters.name).then((res) => {
+    axios.get(`http://localhost:4000/materiel/search/` + filters.name).then((res) => {
 
       let materielList = res.data.materiels;
       if (category.length != 0) {
@@ -97,8 +111,6 @@ function RTMain() {
     )
   }
 
-
-  //TODO: make them pass data between them
   return (
     <>
       <RtSearchBar nameSetter={nameSetter} />

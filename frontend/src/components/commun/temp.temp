@@ -1,0 +1,76 @@
+
+import React from 'react'
+
+function ItemSetter() {
+  return (
+    <div className="sm:mt-2  card-actions justify-center lg:justify-end">
+
+      {modeEdit == false ?
+        <button className="btn  text-3xl" onClick={() => {
+          if (itemCounter > 1) {
+
+            axios.put("http://localhost:4000/order/update", { ...orderItemData, qte: orderItemData.qte - 1 }).then(res => {
+              console.log(res)
+              setItemCounter(itemCounter - 1)
+              setOrderItemData({ ...orderItemData, qte: itemCounter - 1 })
+            })
+
+          }
+        }}><IoIosRemoveCircleOutline /></button>
+        :
+        <button className="btn  text-3xl btn-outline btn-error" onClick={() => {
+          setItemCounter(0);
+
+          axios.put("http://localhost:4000/order/update", { ...orderItemData, qte: itemCounter }).then(res => {
+            setItemCounter(orderItemData.qte)
+            setOrderItemData({ ...orderItemData, qte: itemCounter })
+            console.log(orderItemData)
+          })
+        }}><IoIosClose /></button>
+      }
+
+
+
+      <input type="text" className="input input-bordered max-w-16 text-center" onChange={handleChange} value={isNaN(itemCounter) ? "" : itemCounter} onFocus={() => setModeEdit(true)} />
+
+
+
+      {/*normal state*/}
+      {modeEdit == false ?
+        <button className="btn  text-3xl" onClick={() => {
+
+          axios.put("http://localhost:4000/order/update", { ...orderItemData, qte: orderItemData.qte + 1 }).then(res => {
+            setOrderItemData({ ...orderItemData, qte: itemCounter + 1 })
+
+          })
+
+          setItemCounter(itemCounter + 1)
+
+        }}  ><IoIosAddCircleOutline /></button>
+        :
+        <button className="btn  text-3xl btn-outline btn-success" onClick={() => {
+          if (itemCounter == 0) {
+
+            console.log(orderItemData)
+            setOrderItemData({ ...orderItemData, qte: 1 })
+            axios.post("http://localhost:4000/order/add", orderItemData).then(res => {
+              console.log(res)
+
+            }
+            )
+          } else {
+            axios.put("http://localhost:4000/order/update", { ...orderItemData, qte: itemCounter }).then(res => {
+              console.log(itemCounter)
+              setOrderItemData({ ...orderItemData, qte: itemCounter })
+            })
+          }
+
+        }}  ><IoIosCheckmark /></button>
+      }
+
+
+    </div>
+  )
+}
+
+export default ItemSetter

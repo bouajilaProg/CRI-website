@@ -4,11 +4,12 @@ interface MaterialItemProps {
   title: string;
   description: string;
   category: string;
+  link: string;
 }
 
 function MaterialItem(MaterialItemDetails: MaterialItemProps) {
   return (
-    <Link to={"/RT/exemple"} className="w-[46%] md:w-auto">
+    <Link to={"./" + MaterialItemDetails.link} className="w-[46%] md:w-auto">
       <div className="card card-compact p-0 m-0 bg-base-100 md:w-48 shadow-xl ">
         <figure>
           <img

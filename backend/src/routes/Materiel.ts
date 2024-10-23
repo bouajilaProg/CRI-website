@@ -27,10 +27,42 @@ MaterielRouter.get('/', async (req, res) => {
   }
 });
 
-// Search for materiel by name, category, and availabilitiy V
+
 MaterielRouter.get('/search', async (req, res) => {
 
-  let name = req.query.name as string;
+
+
+  try {
+    const data = await sqlRun(
+      "SELECT * FROM materiel AS m, category AS c WHERE m.category_id = c.category_name_id",
+    );
+
+    const categories = data.rows.map((materiel: Materiel) => materiel.category_name);
+
+    const removeDuplicates = (arr: string[]) => {
+      if (arr.length === 0) {
+        return arr;
+      }
+      let unique = [arr[0]];
+      for (let i = 1; i < arr.length; i++) {
+        if (arr[i] != arr[i - 1]) {
+          unique.push(arr[i]);
+        }
+      }
+      return unique;
+    }
+
+    res.status(200).json({ materiels: data.rows, categories: removeDuplicates(categories) });
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+
+// Search for materiel by name, category, and availabilitiy V
+MaterielRouter.get('/search/:name', async (req, res) => {
+
+  let name = req.params.name as string;
 
   if (name === undefined) {
     name = "";
@@ -38,13 +70,9 @@ MaterielRouter.get('/search', async (req, res) => {
 
   try {
     const data = await sqlRun(
-
       "SELECT * FROM materiel AS m, category AS c WHERE m.category_id = c.category_name_id AND m.materiel_name LIKE '%' || $1 || '%';",
       [name]
     );
-
-
-
 
     const categories = data.rows.map((materiel: Materiel) => materiel.category_name);
 

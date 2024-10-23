@@ -30,6 +30,7 @@ function MaterialList({ materials }: MaterialListProps) {
           title={m.materiel_name}
           description={m.description}
           category={m.category_name}
+          link={m.materiel_id.toString()}
         />
       ))}
     </div>

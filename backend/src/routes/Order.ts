@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { sqlRun } from "../db/db";
 import { testNumber } from "../checks";
+import { parse } from "dotenv";
 
 const OrderRouter = Router();
 
@@ -35,7 +36,7 @@ OrderRouter.post('/new', async (req, res) => {
       return;
     }
 
-    await sqlRun("INSERT INTO orders (user_id) VALUES ($1);", [userid]);
+    await sqlRun("INSERT INTO orders (user_id,order_state) VALUES ($1,$2);", [userid, "current"]);
     res.status(201).json({ success: 'success:/new' });
   } catch (error) {
     res.status(500).json({ error: error });
@@ -75,8 +76,11 @@ OrderRouter.put("/update", async (req, res) => {
 });
 
 // Delete material from an order V
-OrderRouter.delete("/delete", async (req, res) => {
-  const { orderid, materielid } = req.body;
+OrderRouter.delete("/delete/:orderid/:materielid", async (req, res) => {
+
+  const orderid = parseInt(req.params.orderid)
+  const materielid = parseInt(req.params.materielid)
+
   testNumber(orderid);
   testNumber(materielid);
   try {
@@ -89,10 +93,8 @@ OrderRouter.delete("/delete", async (req, res) => {
 });
 
 // Get current orders for a user V
-OrderRouter.post("/current", async (req, res) => {
-  const { userid } = req.body;
-  testNumber(userid);
-
+OrderRouter.get("/current", async (req, res) => {
+  const { userid } = req.query;
   try {
     const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_state = 'current';", [userid]);
     res.status(200).json(data.rows[0]);
@@ -115,6 +117,25 @@ OrderRouter.put("/send", async (req, res) => {
   }
 });
 
+OrderRouter.get("/orderItem", async (req, res) => {
+  const { currentOrder, materiel } = req.query;
+  if (currentOrder === undefined || materiel === undefined) {
+    res.status(400).json({ error: "missing query parameters" });
+    return;
+  }
+  try {
+    const data = await sqlRun(
+      "SELECT qte FROM order_item WHERE order_id = $1 AND materiel_id = $2;",
+      [currentOrder, materiel]
+    );
+    res.status(200).json(data.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+
+
 // Get orders for a specific user V
 OrderRouter.get("/:user", async (req, res) => {
   const { user } = req.params;
@@ -125,5 +146,8 @@ OrderRouter.get("/:user", async (req, res) => {
     res.status(500).json({ error: error });
   }
 });
+
+
+
 
 export default OrderRouter;
