@@ -1,9 +1,61 @@
+import axios from "axios";
+import { useState } from "react";
 
-function SideMenu() {
+
+type CartRequest = {
+  orderid: number,
+  begin_date: Date,
+  return_date: Date,
+  reason: string
+}
+
+
+function SideMenu({ orderid }: { orderid: number }) {
+
+  const [cartRequest, setCartRequest] = useState<CartRequest>({
+    orderid: orderid,
+    begin_date: new Date(),
+    return_date: new Date(),
+    reason: "temp"
+  })
+
 
   function handleSubmit(e: any) {
-    e.preventDefault()
+    e.preventDefault();
     const OrderDate = e.target.OrderDate.value;
+    const ReturnDate = e.target.ReturnDate.value;
+    const reason = e.target.reason.value;
+
+    if (!OrderDate || !ReturnDate || !reason) {
+      alert('Please fill all the fields');
+    } else if (new Date(OrderDate).getTime() > new Date(ReturnDate).getTime()) {
+      alert('Order date cannot be greater than return date');
+    } else {
+      // Create a local cartRequest object
+      const updatedCartRequest = {
+        orderid: orderid,
+        begin_date: new Date(OrderDate),
+        return_date: new Date(ReturnDate),
+        reason: reason,
+      };
+
+      // Update state with the new cart request
+      setCartRequest(updatedCartRequest);
+
+      console.log({ ...updatedCartRequest, orderid: orderid });
+
+      // Send the updated cartRequest in the axios call
+      axios.put('http://localhost:4000/order/send', { ...updatedCartRequest, orderid: orderid })
+        .then(res => {
+          if (res.data.success) {
+            alert('Order sent successfully');
+          }
+        })
+        .catch(err => {
+          alert('Something went wrong');
+          console.log(err);
+        });
+    }
   }
 
   return (
