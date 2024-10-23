@@ -5,17 +5,17 @@
 // 4 status returned
 
 
-function Badge({ status }: { status: number }) {
+function Badge({ status }: { status: string }) {
 
-  if (status === 0) {
+  if (status === "pending") {
     return <span className="badge badge-secondary text-white">Pending</span>
-  } else if (status === 1) {
+  } else if (status === "accepted") {
     return <span className="badge badge-primary text-white">Accepted</span>
-  } else if (status === 2) {
+  } else if (status === "delivered") {
     return <span className="badge badge-success text-white">Delivered</span>
-  } else if (status === 3) {
+  } else if (status === "refused") {
     return <span className="badge badge-error text-white">Refused</span>
-  } else if (status === 4) {
+  } else if (status === "returned") {
     return <span className="badge badge-warning text-white">Returned</span>
   }
 

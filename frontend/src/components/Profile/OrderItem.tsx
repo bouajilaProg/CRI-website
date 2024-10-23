@@ -1,9 +1,11 @@
 import Badge from "./Badge";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 
 interface OrderItemProps {
-  date: string;
-  status: number;
+  beginDate: string,
+  returnDate: string,
+  status: string;
   items: { name: string, quantity: number }[];
 }
 
@@ -14,13 +16,25 @@ interface OrderItemProps {
 // 4 status returned
 
 
-function OrderItem({ date, status, items }: OrderItemProps) {
+function OrderItem({ beginDate, returnDate, status, items }: OrderItemProps) {
   return (
     <div>
       <div className="collapse collapse-arrow">
         <input type="checkbox" name="my-accordion-2" />
-        <div className="collapse-title text-xl font-medium"><span className="mr-2">{date}</span>
-          <Badge status={status} />
+        <div className="collapse-title text-xl font-medium inline-flex">
+          <span className="mr-2">{new Date(beginDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+          })}</span>
+          <span className="mr-2"><IoIosArrowRoundForward /></span>
+          <span>{new Date(returnDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+          })}</span>
+          <span className="mb-2 ml-2">
+
+            <Badge status={status} />
+          </span>
         </div>
         <div className="collapse-content flex flex-col">
 
@@ -36,7 +50,6 @@ function OrderItem({ date, status, items }: OrderItemProps) {
           ))
           }
 
-          <div className="inline-flex justify-between w-full"><span>items</span> <span>5</span></div>
 
         </div>
       </div>

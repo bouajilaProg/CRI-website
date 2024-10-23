@@ -1,68 +1,75 @@
 import OrderItem from "@/components/Profile/OrderItem";
+import getUserId from "@/utils/UserManager";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-
-interface ProfileData {
+type ProfileData = {
   user: string;
-
   orders: {
-    date: string;
-    status: number;
-    items: { name: string, quantity: number }[]
+    beginDate: string;
+    returnDate: string;
+    status: string;
+    items: { name: string; quantity: number }[];
   }[];
-}
-
+};
 
 function Profile() {
-
   const defaultProfileData: ProfileData = {
     user: "",
-    orders: []
-  }
+    orders: [],
+  };
 
-  const [profileData, setProfileData] = useState<ProfileData>(defaultProfileData)
+  const [profileData, setProfileData] = useState<ProfileData>(defaultProfileData);
 
   useEffect(() => {
-    //TODO: Fetch orders from the server
-    setProfileData({
-      user: "John Doe",
-      orders: [
-        { date: "2021-09-01", status: 2, items: [{ name: "item1", quantity: 2 }, { name: "item2", quantity: 3 }] },
-        { date: "2021-09-02", status: 0, items: [{ name: "item3", quantity: 1 }, { name: "item4", quantity: 2 }] },
-        { date: "2021-09-03", status: 1, items: [{ name: "item5", quantity: 4 }, { name: "item6", quantity: 5 }] },
-        { date: "2021-09-04", status: 3, items: [{ name: "item7", quantity: 6 }, { name: "item8", quantity: 7 }] },
-        { date: "2021-09-05", status: 4, items: [{ name: "item9", quantity: 8 }, { name: "item10", quantity: 9 }] },
-      ]
-    })
-  }
-    , [])
+    // Fetch orders from the server
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/order/" + getUserId());
+        console.log(res.data);
 
-  if (profileData.orders.length == 0) {
-    return (<div className="flex flex-col mx-8 md:mx-16">
-      <h1 className="text-4xl my-8">Hello {profileData.user}</h1>
+        if (res.data.length === 0) {
+          console.log("no orders found");
+          return;
+        }
 
-      <p>No orders found</p>
-    </div>)
-  }
+        const orders = res.data.map((order: any) => ({
+          beginDate: order.orderData.begin_date,
+          returnDate: order.orderData.return_date,
+          status: order.orderData.order_state,
+          items: order.items.map((item: any) => ({
+            name: item.materiel_id,
+            quantity: item.qte,
+          })),
+        }));
 
+        setProfileData({ user: getUserId(), orders });
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
 
-
+    fetchOrders();
+  }, []);
 
   return (
     <div className="flex flex-col mx-8 md:mx-16">
-      <h1 className="text-4xl my-8">Hello {profileData.user}</h1>
-      <h3 className="text-2xl">My Orderers</h3>
+      <h3 className="text-2xl">My Orders</h3>
 
       {profileData.orders.map((order, index) => (
         <>
-          <OrderItem key={index} date={order.date} status={order.status} items={order.items} />
-
+          <OrderItem
+            key={index}
+            beginDate={order.beginDate}
+            returnDate={order.returnDate}
+            status={order.status}
+            items={order.items}
+          />
           <hr className="my-2" />
         </>
       ))}
-
     </div>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

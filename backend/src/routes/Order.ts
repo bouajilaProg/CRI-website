@@ -134,19 +134,60 @@ OrderRouter.get("/orderItem", async (req, res) => {
   }
 });
 
+type OrderData = {
+  begin_date: Date,
+  return_date: Date,
+  order_state: string,
+  reason: string,
+  user_id: number
+}
 
-
+type orderItem = {
+  orderData: OrderData,
+  items: { materiel_id: string, qte: number }[];
+}
 // Get orders for a specific user V
+
+// Get orders for a specific user
 OrderRouter.get("/:user", async (req, res) => {
   const { user } = req.params;
+  let Result: orderItem[] = [];
+
   try {
-    const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_state != 'pending';", [user]);
-    res.status(200).json(data.rows);
+    // Fetch orders for the user
+    const data = await sqlRun("SELECT * FROM orders WHERE user_id = $1 AND order_state != 'current';", [user]);
+
+    // Create an array of promises for order items
+    const orderItemPromises = data.rows.map(async (order: any) => {
+      const items = await sqlRun("SELECT order_id,materiel_name,qte FROM order_item as o,materiel as m WHERE order_id = $1 and o.materiel_id = m.materiel_id;", [order.order_id]);
+
+      const materielItems: { materiel_id: string, qte: number }[] = items.rows.map((item: any) => ({
+        materiel_id: item.materiel_name,
+        qte: item.qte
+      }));
+
+      Result.push({
+        orderData: {
+          begin_date: order.begin_date,
+          return_date: order.return_date,
+          order_state: order.order_state,
+          reason: order.reason,
+          user_id: order.user_id
+        },
+        items: materielItems
+      });
+    });
+
+    // Wait for all order item promises to resolve
+    await Promise.all(orderItemPromises);
+
+    // Send the response after all data has been gathered
+    res.status(200).json(Result);
+
   } catch (error) {
     res.status(500).json({ error: error });
   }
 });
-
 
 
 
