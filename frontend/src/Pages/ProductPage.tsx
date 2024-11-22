@@ -54,9 +54,9 @@ function ProductPage() {
     <>
       <div className="flex justify-center mx-4">
         <div className="card lg:card-side bg-base-100 shadow-xl lg:w-[70%]">
-          <figure>
+          <figure >
             <img
-              src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+              src="../../public/MaterialsPhoto/cri product page image.png"
               alt="Album" />
           </figure>
           <div className="card-body">
@@ -67,6 +67,8 @@ function ProductPage() {
             </span> {materielData.description}
             </p>
             <ItemSetter materielId={materielData.materiel_id} />
+
+
           </div>
         </div>
       </div >

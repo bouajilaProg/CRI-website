@@ -33,8 +33,7 @@ function LoginPage() {
         data = res.data;
         localStorage.setItem("user_id", data);
         setLoginValidationTestResult(1);
-
-        navigate("/Profile");
+        navigate("/Profile", { replace: true });
       }
     }).catch((err) => {
       if (err.status === 401) {

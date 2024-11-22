@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function MainNav() {
 
-
-  const [authed, setAuthed] = useState<number>(1)
+  const reloader = useNavigate();
+  const [authed, setAuthed] = useState<number>(0)
 
   useEffect(() => {
     localStorage.getItem("user_id") ? setAuthed(1) : setAuthed(0)

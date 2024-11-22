@@ -8,9 +8,9 @@
 function Badge({ status }: { status: string }) {
 
   if (status === "pending") {
-    return <span className="badge badge-secondary text-white">Pending</span>
+    return <span className="badge badge-info text-white">Pending</span>
   } else if (status === "accepted") {
-    return <span className="badge badge-primary text-white">Accepted</span>
+    return <span className="badge badge-accent text-white">Accepted</span>
   } else if (status === "delivered") {
     return <span className="badge badge-success text-white">Delivered</span>
   } else if (status === "refused") {

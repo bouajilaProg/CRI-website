@@ -99,7 +99,7 @@ function ItemSetter({ materielId }: { materielId: number }) {
 
   if (!added) {
     return (
-      <div className="sm:mt-2  card-actions justify-center lg:justify-end">
+      <div className="sm:mt-2  card-actions justify-center lg:justify-end sm:gap-0 flex-nowrap  ">
 
         <button className="btn  text-3xl" onClick={() => {
           setAdded(true);
@@ -113,7 +113,7 @@ function ItemSetter({ materielId }: { materielId: number }) {
   }
 
   return (
-    <div className="sm:mt-2  card-actions justify-center lg:justify-end">
+    <div className="sm:mt-2 flex gap-1  justify-center lg:justify-end sm:flex-nowrap md:flex-wrap">
       {!editMode ?
         <button className="btn  text-3xl" onClick={
           () => {

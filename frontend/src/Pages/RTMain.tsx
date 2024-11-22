@@ -40,7 +40,6 @@ function RTMain() {
     category_name_id: number;
     category_name: string;
     materiel_qte: number;
-    link: string; // Assuming you have a link property
   };
 
   const [categories, setCategories] = useState<string[]>([]);

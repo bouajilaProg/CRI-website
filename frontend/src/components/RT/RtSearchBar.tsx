@@ -85,8 +85,8 @@ function RtSearchBar({ nameSetter, materiel }: RtSearchBarProps) {
           className={`bg-white list-none text-left w-full md:w-1/2 border z-20 border-t-0 border-slate-300 rounded-b m-0 absolute ${options.length === 0 ? 'hidden' : ''} ${search.length === 0 ? 'hidden' : ''}`}
         >
           {options.map((o) => (
-            <li key={o.id} className="p-2 hover:bg-slate-300">
-              <Link to={`/RT/${o.id}`} className="w-full block text-left">
+            <li key={o.id} className=" hover:bg-slate-300">
+              <Link to={`/RT/${o.id}`} className="p-2 w-full block text-left">
                 {o.name}
               </Link>
             </li>

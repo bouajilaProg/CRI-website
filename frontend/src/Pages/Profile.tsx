@@ -2,6 +2,7 @@ import OrderItem from "@/components/Profile/OrderItem";
 import getUserId from "@/utils/UserManager";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type ProfileData = {
   user: string;
@@ -25,6 +26,11 @@ function Profile() {
     // Fetch orders from the server
     const fetchOrders = async () => {
       try {
+        if (!getUserId()) {
+          console.log("No user found");
+          return;
+        }
+
         const res = await axios.get("http://localhost:4000/order/" + getUserId());
         console.log(res.data);
 
@@ -53,7 +59,7 @@ function Profile() {
   }, []);
 
   return (
-    <div className="flex flex-col mx-8 md:mx-16">
+    <div className="flex flex-col h-[80vh] mx-8 md:mx-16">
       <h3 className="text-2xl">My Orders</h3>
 
       {profileData.orders.map((order, index) => (

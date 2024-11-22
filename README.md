@@ -1,38 +1,53 @@
-# Coding Conventions
+Here's the updated README to include **Express.js**:  
 
-To make the use of this project easier for future developers, please adhere to the following rules:
+---
 
-## TypeScript Naming Conventions
+# **CRI Material Borrowing System**  
 
-- Use **camelCase** for variable names.
-  - **Examples:** `helloWorld`, `itemPrice`, `fooValue`
+🚀 A comprehensive platform designed for the **Club Robotique ISIMM (CRI)** to manage material borrowing efficiently. This system allows **members** to log in and borrow materials while empowering the **Technical Resource Manager (RT)** to manage and oversee borrowing requests seamlessly.  
 
-## Clarity in Naming
+---
 
-- The names of variables, branches, and commits should be **clear and insightful**.
+## 🖥️ **Technologies Used**  
 
-### Bad Examples:
-- `iPrice`
-- `a`
-- `new nav`
+- **Frontend**: ![React Logo](https://raw.githubusercontent.com/github/explore/main/topics/react/react.png) React.js  
+- **Backend**: ![Node.js Logo](https://raw.githubusercontent.com/github/explore/main/topics/nodejs/nodejs.png) Node.js (with ![Express.js Logo](https://raw.githubusercontent.com/github/explore/main/topics/express/express.png) Express.js)  
+- **Database**: ![PostgreSQL Logo](https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png) PostgreSQL  
 
-### Good Examples:
-- `itemPrice`
-- `fooValue`
-- `added a new nav in the fooPage`
+---
 
-## Type Naming Convention
+## 🎯 **Features**  
 
-- Types should be named in the following format:
-  - `t_typeName`
+### 🟢 Member Features:  
+- Log in using secure credentials.  
+- Browse available materials.  
+- Submit borrowing requests.  
+- View their borrowing history and status updates.  
 
-## Comments
+### 🔵 Technical Resource Manager Features:  
+- Approve or reject borrowing requests.  
+- Track materials and ensure proper returns.  
+- Add, update, or remove materials from the inventory.  
+---
 
-- Try to add comments before every function (optional but it helps a lot : ) )
+## 🚀 **Getting Started**  
 
-## Class and Component Naming Conventions
+### Prerequisites:  
+- Node.js  
+- PostgreSQL  
 
-- Class and component names should use **PascalCase**.
-  - **Examples:** `MainObject`, `GreatThings`
+## 🛠️ **Contributing**  
 
-By following these conventions, we can ensure better readability and maintainability of the codebase.
+We welcome contributions! Feel free to open issues or submit pull requests to enhance the platform.  
+
+---  
+
+## 📜 **License**  
+
+This project is licensed under the MIT License.  
+
+---  
+
+> Made for **CRI**  
+
+---

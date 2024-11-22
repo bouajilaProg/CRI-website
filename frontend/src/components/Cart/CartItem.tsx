@@ -19,12 +19,12 @@ function CartItem({ materialId, materielName, description, qte }: t_cartItem) {
   const navigate = useNavigate();
   return (
     <div className={"card card-side bg-base-100 rounded-none border-b my-2 sm:w-full " + (hidden ? "hidden" : "")}>
-      < figure >
+      < figure className='sm:w-full md:w-96  lg:w-40 h-60 ' >
         <img
-          src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+          src="../../../public/MaterialsPhoto/cri cart image.png"
           alt="Item" />
       </figure >
-      <div className="card-body">
+      <div className="card-body w-fit">
         <h2 className="card-title inline-flex justify-between">
           <span>{materielName}</span>
           <button className="px-[8px] py-[2px] text-3xl hover:text-red-600" onClick={
@@ -51,7 +51,9 @@ function CartItem({ materialId, materielName, description, qte }: t_cartItem) {
           </button>
         </h2>
         <p>{description}</p>
-        <ItemSetter materielId={materialId} />
+        <div className='flex-nowrap justify-end'>
+          <ItemSetter materielId={materialId} />
+        </div>
       </div>
     </div >
   );
