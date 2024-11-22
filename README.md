@@ -10,9 +10,10 @@ Here's the updated README to include **Express.js**:
 
 ## 🖥️ **Technologies Used**  
 
-- **Frontend**: ![React Logo](https://raw.githubusercontent.com/github/explore/main/topics/react/react.png) React.js  
-- **Backend**: ![Node.js Logo](https://raw.githubusercontent.com/github/explore/main/topics/nodejs/nodejs.png) Node.js (with ![Express.js Logo](https://raw.githubusercontent.com/github/explore/main/topics/express/express.png) Express.js)  
-- **Database**: ![PostgreSQL Logo](https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png) PostgreSQL  
+- **Frontend**: <img src="https://raw.githubusercontent.com/github/explore/main/topics/react/react.png" alt="React Logo" width="20"/> React.js  
+- **Backend**: <img src="https://raw.githubusercontent.com/github/explore/main/topics/nodejs/nodejs.png" alt="Node.js Logo" width="20"/> Node.js (with Express.js)  
+- **Database**: <img src="https://raw.githubusercontent.com/github/explore/main/topics/postgresql/postgresql.png" alt="PostgreSQL Logo" width="20"/> PostgreSQL  
+ 
 
 ---
 
