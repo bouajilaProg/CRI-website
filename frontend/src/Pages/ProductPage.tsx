@@ -1,6 +1,6 @@
-import ItemSetter from '@/components/commun/ItemSetter';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import ItemSetter from "@/components/commun/ItemSetter";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 type Materiel = {
   materiel_id: number;
@@ -13,13 +13,7 @@ type Materiel = {
   category_name: string;
 };
 
-
-
-
 function ProductPage() {
-
-
-
   const [materielData, setMaterielData] = useState<Materiel>({
     materiel_id: 0,
     materiel_name: "",
@@ -32,48 +26,50 @@ function ProductPage() {
   });
 
   useEffect(() => {
-    const materielId = location.pathname.split('/').pop();
+    const materielId = location.pathname.split("/").pop();
     if (materielId) {
       axios.get(`http://localhost:4000/materiel/${materielId}`)
-        .then(res => {
+        .then((res) => {
           if (res.data.length === 0) {
             console.log("pp data not found");
             throw new Error("No data found");
           }
           setMaterielData(res.data);
         })
-        .catch(err => {
+        .catch((err) => {
           console.warn(err);
         });
     }
   }, [location.pathname]);
 
-
-
   return (
     <>
-      <div className="flex justify-center mx-4">
-        <div className="card lg:card-side bg-base-100 shadow-xl lg:w-[70%]">
-          <figure >
+      <div className="flex justify-center mx-4 flex-col min-h-screen align-middle">
+        <div className="card lg:card-side bg-base-100 shadow-xl lg:p-48 lg:mx-20">
+          <figure className="">
             <img
               src="../../public/MaterialsPhoto/cri product page image.png"
-              alt="Album" />
+              alt="Album"
+            />
           </figure>
           <div className="card-body">
-            <h2 className="card-title text-center w-full "> <span className="mb-1">{materielData.materiel_name} </span>
-              <div className="badge badge-outline">{materielData.category_name}</div>
+            <h2 className="card-title text-center w-full ">
+              <span className="mb-1">{materielData.materiel_name}</span>
+              <div className="badge badge-outline">
+                {materielData.category_name}
+              </div>
             </h2>
-            <p><span className='flex gap-2'>
-            </span> {materielData.description}
+            <p>
+              <span className="flex gap-2">
+              </span>{" "}
+              {materielData.description}
             </p>
             <ItemSetter materielId={materielData.materiel_id} />
-
-
           </div>
         </div>
-      </div >
+      </div>
     </>
-  )
+  );
 }
 
-export default ProductPage
+export default ProductPage;

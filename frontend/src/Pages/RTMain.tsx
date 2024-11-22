@@ -46,10 +46,14 @@ function RTMain() {
   const [materielList, setMaterielList] = useState<Materiel[]>([]);
 
   async function onStart() {
-    const res = await axios.get("http://localhost:4000/order/current?userid=" + getUserId());
+    const res = await axios.get(
+      "http://localhost:4000/order/current?userid=" + getUserId(),
+    );
 
     if (!res.data) {
-      await axios.post("http://localhost:4000/order/new", { userid: getUserId() });
+      await axios.post("http://localhost:4000/order/new", {
+        userid: getUserId(),
+      });
     } else {
       console.log("already have order");
     }
@@ -66,59 +70,59 @@ function RTMain() {
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/materiel/search/" + filters.name).then((res) => {
-      setCategories(res.data.categories);
-      setMaterielList(res.data.materiels);
-    });
+    axios.get("http://localhost:4000/materiel/search/" + filters.name).then(
+      (res) => {
+        setCategories(res.data.categories);
+        setMaterielList(res.data.materiels);
+      },
+    );
   }, [filters.name]);
 
   useEffect(() => {
     const { category, availability } = filters;
-    axios.get(`http://localhost:4000/materiel/search/` + filters.name).then((res) => {
-      let materielList = res.data.materiels;
-      if (category.length !== 0) {
-        materielList = materielList.filter((materiel: Materiel) => filters.category.includes(materiel.category_name));
-      }
+    axios.get(`http://localhost:4000/materiel/search/` + filters.name).then(
+      (res) => {
+        let materielList = res.data.materiels;
+        if (category.length !== 0) {
+          materielList = materielList.filter((materiel: Materiel) =>
+            filters.category.includes(materiel.category_name)
+          );
+        }
 
-      if (availability) {
-        materielList = materielList.filter((materiel: Materiel) => materiel.materiel_qte > 0);
-      }
+        if (availability) {
+          materielList = materielList.filter((materiel: Materiel) =>
+            materiel.materiel_qte > 0
+          );
+        }
 
-      setMaterielList(materielList);
-    });
+        setMaterielList(materielList);
+      },
+    );
   }, [filters.category, filters.availability]);
 
-  if (materielList.length === 0) {
-    return (
-      <>
-        <RtSearchBar nameSetter={nameSetter} materiel={materielList.map(materiel => (
+  return (
+    <div className="min-h-screen mt-40">
+      <RtSearchBar
+        nameSetter={nameSetter}
+        materiel={materielList.map((materiel) => (
           {
             name: materiel.materiel_name,
-            description: materiel.description,
-            category: materiel.category_name,
+            id: materiel.materiel_id,
           }
-        ))} autoComplete="off" />
-        <div className="flex flex-wrap sm:flex-row flex-col ">
-          <h1 className="text-4xl text-center h-full w-full">No materiel found</h1>
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <RtSearchBar nameSetter={nameSetter} materiel={materielList.map(materiel => (
-        {
-          name: materiel.materiel_name,
-          id: materiel.materiel_id,
-        }
-      ))} />
+        ))}
+      />
       <div className="h-16"></div>
-      <div className="flex flex-wrap sm:flex-row flex-col ">
-        <FilterBar categorySetter={categorySetter} availabilitySetter={availabilitySetter} categories={categories} />
-        <MaterialList materials={materielList} />
-      </div>
-    </>
+      {materielList.length !== 0 && (
+        <div className="flex flex-wrap sm:flex-row flex-col ">
+          <FilterBar
+            categorySetter={categorySetter}
+            availabilitySetter={availabilitySetter}
+            categories={categories}
+          />
+          <MaterialList materials={materielList} />
+        </div>
+      )}
+    </div>
   );
 }
 

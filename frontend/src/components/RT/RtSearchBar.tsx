@@ -11,23 +11,27 @@ function RtSearchBar({ nameSetter, materiel }: RtSearchBarProps) {
   const [options, setOptions] = useState<{ name: string; id: number }[]>([]);
 
   useEffect(() => {
-    const SearchInput = document.querySelector<HTMLInputElement>("#searchInput");
+    const SearchInput = document.querySelector<HTMLInputElement>(
+      "#searchInput",
+    );
 
     const handleBlur = () => {
-      const autoComplete = document.querySelector<HTMLUListElement>("#autoComplete");
+      const autoComplete = document.querySelector<HTMLUListElement>(
+        "#autoComplete",
+      );
       if (autoComplete) {
         autoComplete.classList.add("hidden");
       }
     };
 
     const handleFocus = () => {
-      const autoComplete = document.querySelector<HTMLUListElement>("#autoComplete");
+      const autoComplete = document.querySelector<HTMLUListElement>(
+        "#autoComplete",
+      );
       if (autoComplete) {
         autoComplete.classList.remove("hidden");
       }
     };
-
-
 
     return () => {
       if (SearchInput) {
@@ -39,7 +43,7 @@ function RtSearchBar({ nameSetter, materiel }: RtSearchBarProps) {
 
   // Fetch options based on search term
   useEffect(() => {
-    const filteredOptions = materiel.filter(o =>
+    const filteredOptions = materiel.filter((o) =>
       o.name.toLowerCase().includes(search.toLowerCase())
     );
     setOptions(filteredOptions);
@@ -51,7 +55,7 @@ function RtSearchBar({ nameSetter, materiel }: RtSearchBarProps) {
   }
 
   return (
-    <div className="ml-4 mr-8">
+    <div className="mx-8">
       <div className="flex justify-center mt-8">
         <label className="w-full md:w-1/2 p-0 my-0 flex items-center gap-2 gap-y-0 border border-slate-300 rounded-t">
           <input
@@ -82,7 +86,8 @@ function RtSearchBar({ nameSetter, materiel }: RtSearchBarProps) {
       <div className="flex justify-center align-top my-0 relative md:mx-0">
         <ul
           id="autoComplete"
-          className={`bg-white list-none text-left w-full md:w-1/2 border z-20 border-t-0 border-slate-300 rounded-b m-0 absolute ${options.length === 0 ? 'hidden' : ''} ${search.length === 0 ? 'hidden' : ''}`}
+          className={`bg-white list-none text-left w-full md:w-1/2 border z-20 border-t-0 border-slate-300 rounded-b m-0 absolute ${options.length === 0 ? "hidden" : ""
+            } ${search.length === 0 ? "hidden" : ""}`}
         >
           {options.map((o) => (
             <li key={o.id} className=" hover:bg-slate-300">

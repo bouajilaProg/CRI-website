@@ -20,7 +20,9 @@ function Profile() {
     orders: [],
   };
 
-  const [profileData, setProfileData] = useState<ProfileData>(defaultProfileData);
+  const [profileData, setProfileData] = useState<ProfileData>(
+    defaultProfileData,
+  );
 
   useEffect(() => {
     // Fetch orders from the server
@@ -31,7 +33,9 @@ function Profile() {
           return;
         }
 
-        const res = await axios.get("http://localhost:4000/order/" + getUserId());
+        const res = await axios.get(
+          "http://localhost:4000/order/" + getUserId(),
+        );
         console.log(res.data);
 
         if (res.data.length === 0) {
@@ -59,7 +63,7 @@ function Profile() {
   }, []);
 
   return (
-    <div className="flex flex-col h-[80vh] mx-8 md:mx-16">
+    <div className="flex flex-col min-h-screen justify-start mt-40 mx-8 md:mx-16">
       <h3 className="text-2xl">My Orders</h3>
 
       {profileData.orders.map((order, index) => (
