@@ -1,7 +1,3 @@
-Here's the updated README to include **Express.js**:  
-
----
-
 # **CRI Material Borrowing System**  
 
 🚀 A comprehensive platform designed for the **Club Robotique ISIMM (CRI)** to manage material borrowing efficiently. This system allows **members** to log in and borrow materials while empowering the **Technical Resource Manager (RT)** to manage and oversee borrowing requests seamlessly.  
