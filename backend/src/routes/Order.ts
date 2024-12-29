@@ -20,30 +20,30 @@ OrderRouter.get("/all", async (req, res) => {
 OrderRouter.patch("/admin/accept/:orderid", async (req, res) => {
   const { orderid } = req.params;
 
-  // get all items in the order
-  const items = await sqlRun(
-    "SELECT materiel_id, qte FROM order_item WHERE order_id = $1;",
-    [orderid],
-  );
-
-  for (const item of items.rows) {
-    console.log(item);
-    // get the current quantity of the material
-    const currentQte = await sqlRun(
-      "SELECT materiel_qte FROM materiel WHERE materiel_id = $1;",
-      [item.materiel_id],
-    );
-
-    console.log(currentQte.rows[0]);
-    // update the quantity
-    await sqlRun(
-      "UPDATE materiel SET materiel_qte = $1 WHERE materiel_id = $2;",
-      [currentQte.rows[0].materiel_qte - item.qte, item.materiel_id],
-    );
-  }
-
-  res.status(200).json({ success: "success:/admin/accept" });
   try {
+    // get all items in the order
+    const items = await sqlRun(
+      "SELECT materiel_id, qte FROM order_item WHERE order_id = $1;",
+      [orderid],
+    );
+
+    for (const item of items.rows) {
+      console.log(item);
+      // get the current quantity of the material
+      const currentQte = await sqlRun(
+        "SELECT materiel_qte FROM materiel WHERE materiel_id = $1;",
+        [item.materiel_id],
+      );
+
+      console.log(currentQte.rows[0]);
+      // update the quantity
+      await sqlRun(
+        "UPDATE materiel SET materiel_qte = $1 WHERE materiel_id = $2;",
+        [currentQte.rows[0].materiel_qte - item.qte, item.materiel_id],
+      );
+    }
+
+    res.status(200).json({ success: "success:/admin/accept" });
   } catch (e) {
     res.status(500).json({ error: e });
   }
