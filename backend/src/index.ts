@@ -1,38 +1,38 @@
-//imports 
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
-
+//imports
+import express, { Request, Response } from "express";
+import dotenv from "dotenv";
 
 //setup
 const app = express();
 const PORT = process.env.PORT || 4000;
-const cors = require('cors');
+const cors = require("cors");
 
 //import routes
-import UserRouter from './routes/Users';
-import MaterielRouter from './routes/Materiel';
-import OrderRouter from './routes/Order';
-
+import UserRouter from "./routes/Users";
+import MaterielRouter from "./routes/Materiel";
+import OrderRouter from "./routes/Order";
+import categoriesRouter from "./routes/Categories";
 
 dotenv.config();
 app.use(cors([
   {
-    origin: 'http://localhost:3000',
-    credentials: true
+    origin: "http://localhost:5132",
+    credentials: true,
   },
   {
     origin: "*",
-    credentials: true
-  }
+    credentials: true,
+  },
 ]));
 
 //middleware
 app.use(express.json());
 
 //routes
-app.use('/users', UserRouter);
-app.use('/materiel', MaterielRouter);
-app.use('/order', OrderRouter);
+app.use("/users", UserRouter);
+app.use("/materiel", MaterielRouter);
+app.use("/order", OrderRouter);
+app.use("/categories", categoriesRouter);
 
 //run the server
 app.listen(PORT, () => {

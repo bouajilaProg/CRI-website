@@ -5,16 +5,17 @@ import { encrypt } from "../utils";
 
 const UserRouter = Router();
 
-UserRouter.get('/all', async (req, res) => {
+UserRouter.get("/all", async (req, res) => {
   res.send(await sqlRun("select * from users;"));
 });
-
-
 
 UserRouter.post("/Login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const data: any = await sqlRun("select user_id,password from users where email = $1;", [email]);
+    const data: any = await sqlRun(
+      "select user_id,password from users where email = $1;",
+      [email],
+    );
 
     if (email === undefined || password === undefined) {
       throw new Error("Email or password is missing");
@@ -33,16 +34,48 @@ UserRouter.post("/Login", async (req, res) => {
       console.log(data.rows[0]);
       res.status(200).json(JSON.stringify(data.rows[0].user_id));
 
-      return
+      return;
     }
   } catch (error) {
     res.status(500).json({ error: error });
   }
-})
+});
 
+UserRouter.post("/LoginRT", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const data: any = await sqlRun(
+      "select user_id,password from users where email = $1 and status = 'rt' ;",
+      [email],
+    );
 
+    if (email === undefined || password === undefined) {
+      throw new Error("Email or password is missing");
+    }
 
-UserRouter.get('/:id', async (req, res) => {
+    if (data.rows.length === 0) {
+      res.status(404).json("-2");
+      return;
+    }
+
+    if (data.rows[0].password != password) {
+      res.status(401).json("-1");
+      console.log(data.rows[0]);
+      return;
+    }
+
+    if (data.rows[0].password == password) {
+      console.log(data.rows[0]);
+      res.status(200).json(JSON.stringify(data.rows[0].user_id));
+
+      return;
+    }
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
+UserRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   testNumber(parseInt(id));
   try {
