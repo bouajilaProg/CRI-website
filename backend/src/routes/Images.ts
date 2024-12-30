@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     cb(null, "public/");
   },
   filename: (req, file, cb) => {
-    const materielName = req.body.materiel_name;
+    const materielName = req.body.materiel_id;
     console.warn("body:", req.body);
     if (materielName) {
       cb(null, `${materielName}.jpg`);
@@ -45,7 +45,7 @@ ImagesRouter.post(
       }
 
       // Accessing materiel_name
-      const materielName = req.body.materiel_name;
+      const materielName = req.body.materiel_id;
       if (!materielName) {
         res.status(400).json({ error: "No materiel name provided" });
         return;
@@ -85,7 +85,7 @@ ImagesRouter.delete("/:filename", async (req: Request, res: Response) => {
 // Get route for serving the file
 ImagesRouter.get("/:filename", async (req: Request, res: Response) => {
   const { filename } = req.params;
-  res.setHeader("Cache-Control", "no-store"); // This will prevent caching
+  res.setHeader("Cache-Control", "no-store");
   res.sendFile(path.join(__dirname, `../../public/${filename}`));
 });
 

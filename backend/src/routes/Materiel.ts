@@ -162,7 +162,24 @@ MaterielRouter.post("/add", async (req, res) => {
         image_link,
         category_id,
       ]);
-      res.status(201).json({ message: "Material added successfully." });
+
+      //get materiel_id
+      const materielQuery =
+        "SELECT materiel_id from materiel where materiel_name = $1 AND materiel_qte = $2 AND description = $3 AND image_link = $4 AND category_id = $5";
+      const materielResult = await sqlRun(materielQuery, [
+        materiel_name,
+        materiel_qte,
+        description,
+        image_link,
+        category_id,
+      ]);
+
+      const materiel_id = materielResult.rows[0].materiel_id;
+
+      res.status(201).json({
+        message: "Material added successfully.",
+        materiel_id: materiel_id,
+      });
     } catch (error) {
       res.status(500).json({
         error: error,
